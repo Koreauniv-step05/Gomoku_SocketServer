@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gomoku</title>
+    <script src="https:///ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var sock = io.connect('http://127.0.0.1:8001');
+        sock.on('connect', function(){
+            var connect_string = 'new_connect';
+            sock.send(connect_string);
+        });
+
+        sock.on('message', function(msg) {
+            $('#messages').append('>> ' + msg + '<br>');
+            console.log('Received Message : '+msg);
+        });
+
+        $('#sendbutton').on('click', function() {
+            console.log('Clicked');
+            sock.send($('#myMsg').val());
+            console.log($('#myMsg').val());
+            $('#myMsg').val('');
+        });
+    })
+</script>
+<ul id="messages"></ul>
+<input type="text" id="myMsg">
+<button id="sendbutton">Send!!</button>
+
+</body>
+</html>
