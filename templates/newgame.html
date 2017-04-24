@@ -17,7 +17,7 @@
 
         sock.on('message', function(msg) {
             $('#messages').append('>> ' + msg + '<br>');
-            console.log('Received Message : '+msg);
+            console.log('Received Message : '+msg );
         });
 
         $('#sendbutton').on('click', function() {
