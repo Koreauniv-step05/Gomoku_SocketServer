@@ -15,21 +15,25 @@
             sock.send(connect_string);
         });
 
-        sock.on('message', function(msg) {
+        sock.on('game_status', function(msg) {
             $('#messages').append('>> ' + msg + '<br>');
             console.log('Received Message : '+msg );
         });
 
         $('#sendbutton').on('click', function() {
             console.log('Clicked');
-            sock.send($('#myMsg').val());
-            console.log($('#myMsg').val());
-            $('#myMsg').val('');
+{#            sock.emit('game_command', $('#content').val());#}
+{#            #}
+            sock.emit('game_status', $('#content').val(), broadcast=true);
+            console.log($('#content').val());
+{#            $('#command').val('');#}
+            $('#content').val('');
         });
     })
 </script>
 <ul id="messages"></ul>
-<input type="text" id="myMsg">
+<input type="text" id="command">
+<input type="text" id="content">
 <button id="sendbutton">Send!!</button>
 
 </body>
