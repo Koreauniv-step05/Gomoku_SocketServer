@@ -2,6 +2,7 @@ import time
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 
+from consts import config
 from server.SocketController import MyCustomNamespace
 
 app = Flask(__name__)
@@ -40,6 +41,6 @@ def gui(name="Yangyi"):
 
 if __name__ == '__main__':
     socket_io.on_namespace(MyCustomNamespace())
-    socket_io.run(app)
+    socket_io.run(app, host='0.0.0.0', port=config.PORT, debug=True)
 
-    app.run(debug=True, port=8002, host='0.0.0.0')
+    # app.run(debug=True, port=config.PORT, host='0.0.0.0')
