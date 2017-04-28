@@ -37,4 +37,4 @@ if __name__ == '__main__':
     socket_io.on_namespace(MyCustomNamespace())
     socket_io.run(app)
 
-    app.run(debug=True, port=8001, host='0.0.0.0')
+    app.run(debug=True, port=8002, host='0.0.0.0')
