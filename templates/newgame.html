@@ -9,9 +9,23 @@
 <body>
 <script type="text/javascript">
     $(document).ready(function(){
+        function log_to_display(msg) {
+            $('#client_log_display').append(msg + '<br>');
+        }
         var sock = io.connect('http://0.0.0.0:8002');
         sock.on('connect', function(){
-            var connect_string = 'new_connect';
+            log_to_display("connect");
+            var connect_string = 'Javascript Client Connected';
+            sock.send(connect_string);
+        });
+        sock.on('disconnect', function(){
+            log_to_display("disconnect");
+            var connect_string = 'Javascript Client Disconnected';
+            sock.send(connect_string);
+        });
+        sock.on('reconnect', function(){
+            log_to_display("reconnect");
+            var connect_string = 'Javascript Client Reconnected';
             sock.send(connect_string);
         });
 
@@ -45,7 +59,7 @@
 </script>
 <div style="border: 1px solid gold; float: left; width: 33%;">
 <ul id="to_client_display"></ul>
-    첫번째 영역<br>
+    to_client_display<br>
 
 To Client <input type="text" id="to_client"><br>
 To Server <input type="text" id="to_server"><br>
@@ -53,11 +67,11 @@ To Server <input type="text" id="to_server"><br>
 </div>
 <div style="border: 1px solid red; float: left; width: 33%;">
 <ul id="to_server_display"></ul>
-    두번째 영역
+    to_server_display
 </div>
 <div style="border: 1px solid blue; float: left; width: 33%;">
-<ul id="messages"></ul>
-세번째 영역
+<ul id="client_log_display"></ul>
+client_log_display
 </div>
 
 </body>

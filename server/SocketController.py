@@ -7,11 +7,10 @@ class MyCustomNamespace(Namespace):
         super().__init__(namespace)
         self.mGameController = GameController()
 
-    def on_to_server(self, cmd):
-        self.emit('to_server', 'on_to_server: reply '+cmd)
+    def on_to_server(self, data):
+        self.emit('to_server', 'on_to_server: reply '+data)
         # self.emit('to_server', 'on_to_server: broadcast '+cmd, broadcast=True)
-        print("MyCustomNamespace : on_to_server ")
-        print("on_to_server : " + cmd)
+        print("on_to_server : " + data)
         # if (cmd == "join"):
         #     your_role = self.mGameController.allocate_role()
         #     self.emit('game_broadcast', data={
@@ -21,14 +20,20 @@ class MyCustomNamespace(Namespace):
         #         })
 
     def on_to_client(self, data):
-        self.emit('to_client', 'on_to_client: reply'+data)
+        self.emit('to_client', 'on_to_client: reply '+data)
         # self.emit('to_client', 'on_to_client: broadcast'+data, broadcast=True)
-        print("MyCustomNamespace : on_to_client " + data)
+        print("on_to_client : " + data)
         pass
 
-    def on_new_stone(self, data):
-        print("MyCustomNamespace : on_new_stone "  + data)
-        pass
+    def on_connect(self):
+        print("MyCustomNamespace : on_connect")
 
-    def on_my_event(self, data):
-        self.emit('my_response', data)
+    def on_disconnect(self):
+        print("MyCustomNamespace : on_disconnect")
+
+    def on_reconnect(self):
+        print("MyCustomNamespace : on_reconnect")
+
+    def on_message(self, msg):
+        self.send('on_message: reply ' + msg)
+        print("on_message "+msg)
