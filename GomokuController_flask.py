@@ -14,6 +14,11 @@ mGameController = None
 def hello_world(name="Yangyi"):
     # name = request.args.get('name', name)
     return render_template("newgame.html")
+
+@app.route('/gui')
+def gui(name="Yangyi"):
+    # name = request.args.get('name', name)
+    return render_template("gui.html")
 #
 # @socket_io.on("connect")
 # def on_connect():
