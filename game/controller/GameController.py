@@ -26,3 +26,7 @@ class GameController():
 
     def newStonePoint(self, axisX, axisY, isBlack):
         print('GameController/newStonePoint : ({},{},{})'.format(axisX,axisY,isBlack))
+        # todo implements
+        # todo board initialize
+        # todo valid check
+        # todo modify structure like design patterns of java's
