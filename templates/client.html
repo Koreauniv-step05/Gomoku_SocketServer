@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gomoku</title>
+    <script src="https:///ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        function log_to_display(msg) {
+            $('#client_log_display').append(msg + '<br>');
+        }
+        var sock = io.connect('http://0.0.0.0:8002');
+        sock.on('connect', function(){
+            log_to_display("connect");
+            var connect_string = 'Javascript Client Connected';
+            sock.send(connect_string);
+        });
+        sock.on('disconnect', function(){
+            log_to_display("disconnect");
+            var connect_string = 'Javascript Client Disconnected';
+            sock.send(connect_string);
+        });
+        sock.on('reconnect', function(){
+            log_to_display("reconnect");
+            var connect_string = 'Javascript Client Reconnected';
+            sock.send(connect_string);
+        });
+
+        sock.on('to_client', function(msg) {
+            $('#to_client_display').append('to_client >> ' + msg + '<br>');
+            console.log('Received Message : '+msg );
+        });
+
+        sock.on('to_server', function(msg) {
+            $('#to_server_display').append('to_server >> ' + msg + '<br>');
+            console.log('Received Message : '+msg );
+        });
+
+        $('#sendbutton').on('click', function() {
+            console.log('Clicked');
+{#            sock.emit('game_command', $('#To Server').val());#}
+{#            #}
+{#            sock.emit('to_server', $('#to_server').val(), broadcast=true);#}
+
+{#            sock.emit('to_client', $('#to_client').val(), broadcast=true);#}
+            sock.emit('to_client', $('#to_client').val());
+            sock.emit('to_server', $('#to_server').val());
+
+            console.log('to_client'+$('#to_client').val());
+            console.log('to_server'+$('#to_server').val());
+
+            $('#to_client').val('');
+            $('#to_server').val('');
+        });
+    })
+</script>
+<div style="border: 1px solid gold; float: left; width: 33%;">
+<ul id="to_client_display"></ul>
+    to_client_display<br>
+
+To Client <input type="text" id="to_client"><br>
+To Server <input type="text" id="to_server"><br>
+<button id="sendbutton">Send!!</button>
+</div>
+<div style="border: 1px solid red; float: left; width: 33%;">
+<ul id="to_server_display"></ul>
+    to_server_display
+</div>
+<div style="border: 1px solid blue; float: left; width: 33%;">
+<ul id="client_log_display"></ul>
+client_log_display
+</div>
+
+</body>
+</html>

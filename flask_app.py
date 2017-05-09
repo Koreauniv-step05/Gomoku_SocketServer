@@ -8,13 +8,17 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 
 
-@app.route('/')
-def newgame():
-    return render_template("newgame.html")
+# @app.route('/')
+# def newgame():
+#     return render_template("newgame.html")
 
 @app.route('/gui')
 def gui():
     return render_template("gui.html")
 
-socketio = SocketIO(app)
-socketio.on_namespace(MyCustomNamespace())
+@app.route('/')
+def visualize():
+    return render_template("visualize.html")
+
+# socketio = SocketIO(app)
+# socketio.on_namespace(MyCustomNamespace())
